@@ -65,7 +65,7 @@ public class CreateProductFunctionalTest {
         assertEquals("Product' List", titleProductList);
 
         List<WebElement> tableProduct =  driver.findElements(By.tagName("td"));
-        WebElement buttonDelete = tableProduct.get(4);
+        WebElement buttonDelete = tableProduct.get(3);
         buttonDelete.click();
     }
 
