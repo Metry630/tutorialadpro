@@ -57,4 +57,108 @@ public class ProductRepositoryTest {
         productRepository.create(product2);
     }
 
+    @Test
+    void verifyCreateAndDeleteWorkflow() {
+        Iterator<Product> iterator = productRepository.findAll();
+
+        Product newProduct = new Product();
+        productRepository.create(newProduct);
+
+        newProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        newProduct.setProductName("Sampo Cap Bambang");
+        newProduct.setProductQuantity(100);
+
+        assertTrue(iterator.hasNext());
+        productRepository.delete("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    void verifyCreateAndModifyWorkflow() {
+        Random randomizer = new Random();
+        int randomNumber = randomizer.nextInt(1000);
+
+        Iterator<Product> iterator = productRepository.findAll();
+
+        Product initialProduct = new Product();
+        productRepository.create(initialProduct);
+        initialProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        initialProduct.setProductName("Sampo Cap Bambang");
+        initialProduct.setProductQuantity(100);
+
+        Product modifiedProduct = new Product();
+        modifiedProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        modifiedProduct.setProductName("pppp");
+        modifiedProduct.setProductQuantity(randomNumber);
+
+        productRepository.edit(modifiedProduct);
+
+        assertEquals(randomNumber, initialProduct.getProductQuantity());
+        assertEquals("pppp", initialProduct.getProductName());
+    }
+
+    @Test
+    void verifyCreateModifyAndDeleteWorkflow() {
+        Random randomizer = new Random();
+        int randomNumber = randomizer.nextInt(1000);
+
+        Iterator<Product> iterator = productRepository.findAll();
+
+        Product initialProduct = new Product();
+        productRepository.create(initialProduct);
+        initialProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        initialProduct.setProductName("Sampo Cap Bambang");
+        initialProduct.setProductQuantity(100);
+
+        Product modifiedProduct = new Product();
+        modifiedProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        modifiedProduct.setProductName("pppp");
+        modifiedProduct.setProductQuantity(randomNumber);
+
+        productRepository.edit(modifiedProduct);
+
+        assertEquals(randomNumber, initialProduct.getProductQuantity());
+        assertEquals("pppp", initialProduct.getProductName());
+
+        productRepository.delete("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    void verifyEditIfNotFound() {
+        Random randomizer = new Random();
+        int randomNumber = randomizer.nextInt(1000);
+
+        Product existingProduct = new Product();
+        productRepository.create(existingProduct);
+        existingProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        existingProduct.setProductName("Sampo Cap Bambang");
+        existingProduct.setProductQuantity(100);
+
+        Product modifiedProduct = new Product();
+        modifiedProduct.setProductId("");
+        modifiedProduct.setProductName("Lalalalala");
+        modifiedProduct.setProductQuantity(randomNumber);
+
+        productRepository.edit(modifiedProduct);
+
+        assertNotEquals(randomNumber, existingProduct.getProductQuantity());
+        assertNotEquals("Lalalalala", existingProduct.getProductName());
+    }
+
+    @Test
+    void verifyDeleteIfNotFound() {
+        Iterator<Product> iterator = productRepository.findAll();
+
+        Product existingProduct = new Product();
+        productRepository.create(existingProduct);
+        existingProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        existingProduct.setProductName("Sampo Cap Bambang");
+        existingProduct.setProductQuantity(100);
+
+        productRepository.delete("-");
+        assertTrue(iterator.hasNext());
+    }
+
+
 }
