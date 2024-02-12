@@ -1,3 +1,4 @@
+# Tutorial 1
 ## Exercise 1
 The clean code principles that I've applied in this module:
 * Clear and self-explanatory variable names
@@ -15,3 +16,5 @@ This is not so much a mistake as it is a lack of feature, but there needs to be 
 * No, if you have 100% code coverage, your code can still have bugs or errors. It simply means that all functionality in the code has already had tests written for it.
 2. I think the code efficiency would get worse due to repetition. Both functions also do more than one thing, which isn't ideal. We should ideally separate each feature, so that each function only does one thing.
 
+# Tutorial 2
+1. I fixed sam
