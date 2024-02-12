@@ -150,4 +150,32 @@ public class ProductRepositoryTest {
         assertFalse(iterator.hasNext());
     }
 
+    @Test
+    void testFindById() {
+        // Create some products and add them to the repository
+        Product product1 = new Product();
+        product1.setProductId("1");
+        product1.setProductName("Product 1");
+        product1.setProductQuantity(10);
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("2");
+        product2.setProductName("Product 2");
+        product2.setProductQuantity(20);
+        productRepository.create(product2);
+
+        // Test finding existing product by ID
+        Product foundProduct = productRepository.findById("1");
+        assertNotNull(foundProduct);
+        assertEquals("Product 1", foundProduct.getProductName());
+        assertEquals(10, foundProduct.getProductQuantity());
+
+        // Test finding non-existing product by ID
+        Product nonExistingProduct = productRepository.findById("3");
+        assertNull(nonExistingProduct);
+    }
+
+
+
 }
