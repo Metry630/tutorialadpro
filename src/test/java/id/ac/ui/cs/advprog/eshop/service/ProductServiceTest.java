@@ -14,6 +14,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 
 public class ProductServiceTest {
@@ -29,10 +31,10 @@ public class ProductServiceTest {
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
 
-        Mockito.when(productRepository.create(product)).thenReturn(product);
+        when(productRepository.create(product)).thenReturn(product);
         service.create(product);
 
-        Mockito.when(productRepository.findAll()).thenReturn(List.of(product).iterator());
+        when(productRepository.findAll()).thenReturn(List.of(product).iterator());
         Iterator<Product> productIterator = service.findAll().iterator();
 
         assertTrue(productIterator.hasNext());
@@ -50,10 +52,10 @@ public class ProductServiceTest {
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
 
-        Mockito.when(productRepository.create(product)).thenReturn(product);
+        when(productRepository.create(product)).thenReturn(product);
         service.create(product);
 
-        Mockito.when(productRepository.updateProduct(product)).thenReturn(product);
+        when(productRepository.updateProduct(product)).thenReturn(product);
         Product resultEdit = service.updateProduct(product);
 
         assertEquals("eb558e9f-1c39-460e-8860-71af6af63bd6", resultEdit.getProductId());
@@ -68,33 +70,33 @@ public class ProductServiceTest {
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
 
-        Mockito.when(productRepository.create(product)).thenReturn(product);
+        when(productRepository.create(product)).thenReturn(product);
         service.create(product);
 
-        Mockito.when(productRepository.deleteProduct("eb558e9f-1c39-460e-8860-71af6af63bd6")).thenReturn(product);
+        when(productRepository.deleteProduct("eb558e9f-1c39-460e-8860-71af6af63bd6")).thenReturn(product);
         Product resultDelete = service.deleteProduct("eb558e9f-1c39-460e-8860-71af6af63bd6");
 
         assertEquals("eb558e9f-1c39-460e-8860-71af6af63bd6", resultDelete.getProductId());
         assertEquals("Sampo Cap Bambang", resultDelete.getProductName());
         assertEquals(100, resultDelete.getProductQuantity());
     }
-//    @Test
-//    void testFindById() {
-//        Product product = new Product();
-//        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
-//        product.setProductName("Sampo Cap Bambang");
-//        product.setProductQuantity(100);
-//
-//        Mockito.when(productRepository.create(product)).thenReturn(product);
-//        service.create(product);
-//
-//        Mockito.when(productRepository.findAll()).thenReturn(List.of(product).iterator());
-//        Product savedProduct = service.findById("eb558e9f-1c39-460e-8860-71af6af63bd6");
-//
-//        assertEquals(product.getProductId(), savedProduct.getProductId());
-//        assertEquals(product.getProductName(), savedProduct.getProductName());
-//        assertEquals(product.getProductQuantity(), savedProduct.getProductQuantity());
-//    }
+
+    @Test
+    void testFindProductById() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+
+        String productId ="eb558e9f-1c39-460e-8860-71af6af63bd6";
+        when(productRepository.findById(productId)).thenReturn(product);
+
+        Product foundProduct = service.findById(productId);
+
+        assertEquals(product, foundProduct);
+        verify(productRepository, times(1)).findById(productId);
+    }
+
 
 
 }
