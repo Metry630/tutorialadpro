@@ -41,3 +41,11 @@ This is not so much a mistake as it is a lack of feature, but there needs to be 
     - Modifying old code might occur. Modifying old code can trigger test modifications, jeopardizing and removing the assurance of functioning features.
     - Understanding older code takes longer. Due to the length of a function, its name may potentially be unintuitive, demanding developers to read its content.
     - Adding new features becomes difficult. Adding new features may require modifying old code and might involve a lot of code repetition.
+
+
+## Tutorial 4
+
+1. Based on Percival's self-reflective questions regarding the Test-Driven Development (TDD) process, I find the TDD procedure highly beneficial in my software development endeavors. By creating tests before writing code, I can ensure that the code I produce passes tests and is thus safer. This process also aids in confident refactoring as I have a suite of tests to verify that changes I make do not break existing functionality.
+However, I acknowledge that there are aspects to consider to further enhance the testing process. Firstly, I need to consider adding tests that cover interactions between features. For example, I could create tests that encompass creating, updating, and deleting products simultaneously to ensure that these features function correctly in their interactions.
+
+2. Regarding the F.I.R.S.T. principle, I believe that the tests I have created have adhered to this principle. They are focused, independent, repeatable, specific, and timely. Each test examines a single unit of code in isolation and verifies the expected output. However, I will continue striving to improve the quality of my tests by ensuring they cover all possible edge cases and component interactions more thoroughly.
