@@ -1,11 +1,11 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 @Getter
 public class Payment {
@@ -14,46 +14,38 @@ public class Payment {
     String status;
     HashMap<String, String> paymentData;
 
+
+
+
     public Payment(String id, String method, String status, HashMap<String, String> paymentData) {
         this(id, method, paymentData);
-        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
-        if (Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))) {
-            throw new IllegalArgumentException();
-        } else {
+        if (PaymentStatus.contains(status)) {
             this.status = status;
+        } else {
+            throw new IllegalArgumentException();
+
         }
     }
 
     public Payment(String id, String method, HashMap<String,String> paymentData){
         this.id = id;
-        this.status = "WAITING";
+        this.status = PaymentStatus.WAITING.getValue();
 
-        String[] methodList = {"VOUCHER_CODE", "CASH_ON_DELIVERY", "BANK_TRANSFER"};
-        if (Arrays.stream(methodList).noneMatch(item -> (item.equals(method)))){
-            throw new IllegalArgumentException();
-        } else {
+        if (PaymentMethod.contains(method)){
             this.method = method;
+        } else{
+            throw new IllegalArgumentException();
         }
 
-        HashMap<String ,String> paymentDataVoucherCode = new HashMap<>();
-        HashMap<String ,String> paymentDataCashOnDelivery = new HashMap<>();
-        HashMap<String ,String> paymentDataBankTransfer = new HashMap<>();
 
 
-        paymentDataVoucherCode.put("voucherCode", "");
-        paymentDataCashOnDelivery.put("address", "");
-        paymentDataCashOnDelivery.put("deliveryFee", "");
-        paymentDataBankTransfer.put("bankName", "");
-        paymentDataBankTransfer.put("referenceCode", "");
+        if (PaymentMethod.contains(method)){
+            this.method = method;
+        } else{
+            throw new IllegalArgumentException();
+        }
 
-
-
-        ArrayList<HashMap<String, String>> paymentMethodList = new ArrayList<>();
-        paymentMethodList.add(paymentDataVoucherCode);
-        paymentMethodList.add(paymentDataCashOnDelivery);
-        paymentMethodList.add(paymentDataBankTransfer);
-
-        if (!paymentMethodList.contains(paymentData)){
+        if (!PaymentData.checkData(method, paymentData)){
             throw new IllegalArgumentException();
         } else {
             this.paymentData = paymentData;
@@ -62,12 +54,50 @@ public class Payment {
     }
 
     public void setStatus(String status){
-        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
-        if (Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))) {
-            throw new IllegalArgumentException();
-        } else {
+        if (PaymentStatus.contains(status)){
             this.status = status;
+        } else{
+            throw new IllegalArgumentException();
         }
     }
+
 }
 
+
+
+interface PaymentData {
+
+
+    public static boolean checkData(String method, HashMap<String, String> param){
+        Set<String> paramKeySet = param.keySet();
+
+        return switch (method) {
+            case "VOUCHER_CODE" -> {
+                Set<String> voucherCodeKeySet = getVoucherCodeKeySet();
+                yield paramKeySet.equals(voucherCodeKeySet);
+            }
+            case "CASH_ON_DELIVERY" -> {
+                Set<String> cashOnDeliveryKeySet = getCashOnDeliveryKeySet();
+                yield paramKeySet.equals(cashOnDeliveryKeySet);
+            }
+            default -> false;
+        };
+    }
+
+    public static Set<String> getVoucherCodeKeySet(){
+        Set<String> voucherCodeKeys = new HashSet<>();
+        voucherCodeKeys.add("voucherCode");
+
+        return voucherCodeKeys;
+    }
+
+    public static Set<String> getCashOnDeliveryKeySet(){
+        Set<String> cashOnDeliveryKeys = new HashSet<>();
+        cashOnDeliveryKeys.add("address");
+        cashOnDeliveryKeys.add("deliveryFee");
+
+        return cashOnDeliveryKeys;
+    }
+
+
+}

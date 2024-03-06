@@ -44,11 +44,11 @@ public class PaymentTest {
                 products, 1708570000L, "Safira Sudrajat");
         orders.add(order2);
 
-        paymentDataVoucherCode.put("voucherCode", "");
-        paymentDataCashOnDelivery.put("address", "");
-        paymentDataCashOnDelivery.put("deliveryFee", "");
-        paymentDataBankTransfer.put("bankName", "");
-        paymentDataBankTransfer.put("referenceCode", "");
+        paymentDataVoucherCode.put("voucherCode", "voucher-code-1");
+        paymentDataCashOnDelivery.put("address", "Universitas Indonesia");
+        paymentDataCashOnDelivery.put("deliveryFee", "100000");
+        paymentDataBankTransfer.put("bankName", "Bank CA");
+        paymentDataBankTransfer.put("referenceCode", "12345");
 
 
     }
@@ -70,12 +70,12 @@ public class PaymentTest {
         });
     }
 
-//    @Test
-//    void testCreatePaymentInvalidPaymentData(){
-//        assertThrows(IllegalArgumentException.class, () -> {
-//            Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataCashOnDelivery);
-//        });
-//    }
+    @Test
+    void testCreatePaymentInvalidPaymentData(){
+        assertThrows(IllegalArgumentException.class, () -> {
+            Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataCashOnDelivery);
+        });
+    }
 
     @Test
     void testCreatePaymentSuccessStatus(){
@@ -106,5 +106,9 @@ public class PaymentTest {
         Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataVoucherCode);
         assertThrows(IllegalArgumentException.class, () -> payment.setStatus("MEOW"));
     }
+
+
+
+
 
 }
