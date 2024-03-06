@@ -44,7 +44,7 @@ public class PaymentTest {
                 products, 1708570000L, "Safira Sudrajat");
         orders.add(order2);
 
-        paymentDataVoucherCode.put("voucherCode", "voucher-code-1");
+        paymentDataVoucherCode.put("voucherCode", "ESHOP12345678abc");
         paymentDataCashOnDelivery.put("address", "Universitas Indonesia");
         paymentDataCashOnDelivery.put("deliveryFee", "100000");
         paymentDataBankTransfer.put("bankName", "Bank CA");

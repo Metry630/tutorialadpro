@@ -23,7 +23,7 @@ public class PaymentRepositoryTest {
 
         payments = new ArrayList<>();
 
-        HashMap<String, String> paymentData1 = PaymentData.getNewVoucherCodeData("voucherCode-1");
+        HashMap<String, String> paymentData1 = PaymentData.getNewVoucherCodeData("ESHOP12345678abc");
         Payment payment1 = new Payment("id-1", "VOUCHER_CODE", paymentData1);
         HashMap<String, String> paymentData2 = PaymentData.getNewCashOnDeliveryData
                 ("address-1", "deliveryFee-1");
@@ -32,6 +32,7 @@ public class PaymentRepositoryTest {
         payments.add(payment1);
         payments.add(payment2);
     }
+
 
     @Test
     void testAddPayment(){

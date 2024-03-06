@@ -2,48 +2,50 @@ package id.ac.ui.cs.advprog.eshop.model;
 
 import org.junit.jupiter.api.Test;
 
+import static id.ac.ui.cs.advprog.eshop.model.PaymentData.isStringEmpty;
+import static id.ac.ui.cs.advprog.eshop.model.PaymentData.checkVoucherCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PaymentDataTest {
 
     @Test
-    void testTestVoucherCode(){
-        assertTrue(testVoucherCode("ESHOP12345678abc"));
+    void testCheckVoucherCode(){
+        assertTrue(checkVoucherCode("ESHOP12345678abc"));
     }
     @Test
-    void testTestVoucherCodeIfNot16Characters(){
-        assertFalse(testVoucherCode("ESHOP12345678"));
-        assertFalse(testVoucherCode("ESHOP12345678aaaa"));
+    void testCheckVoucherCodeIfNot16Characters(){
+        assertFalse(checkVoucherCode("ESHOP12345678"));
+        assertFalse(checkVoucherCode("ESHOP12345678aaaa"));
 
     }
 
     @Test
-    void testTestVoucherCodeIfDoesNotStartWithESHOP(){
-        assertFalse(testVoucherCode("12345678abcdefgh"));
+    void testCheckVoucherCodeIfDoesNotStartWithESHOP(){
+        assertFalse(checkVoucherCode("12345678abcdefgh"));
     }
 
 
     @Test
-    void testTestVoucherCodeIfDoesNotContain8NumericalCharacters(){
-        assertFalse(testVoucherCode("ESHOP1234567aaaa"));
-        assertFalse(testVoucherCode("ESHOP123456789aa"));
+    void testCheckVoucherCodeIfDoesNotContain8NumericalCharacters(){
+        assertFalse(checkVoucherCode("ESHOP1234567aaaa"));
+        assertFalse(checkVoucherCode("ESHOP123456789aa"));
     }
 
 
     @Test
     void testIsStringEmpty(){
-        assertTrue(isStringEmpty('a'));
+        assertFalse(isStringEmpty("a"));
     }
 
     @Test
     void testIsStringEmptyIfNull(){
-        assertFalse(isStringEmpty(null));
+        assertTrue(isStringEmpty(null));
     }
 
     @Test
     void testIsStringEmptyIfEmpty(){
-        assertFalse(isStringEmpty(""));
+        assertTrue(isStringEmpty(""));
     }
 
 
