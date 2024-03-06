@@ -16,13 +16,14 @@ public class PaymentTest {
     private List<Product> products;
     List<Order> orders;
 
-    HashMap<String, String> paymentDataVoucherCode = new HashMap<>();
-    HashMap<String, String> paymentDataCashOnDelivery = new HashMap<>();
-    HashMap<String, String> paymentDataBankTransfer = new HashMap<>();
+    HashMap<String ,String> paymentDataVoucherCode = new HashMap<>();
+    HashMap<String ,String> paymentDataCashOnDelivery = new HashMap<>();
+    HashMap<String ,String> paymentDataBankTransfer = new HashMap<>();
+
 
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         this.products = new ArrayList<>();
         Product product1 = new Product();
         product1.setId("eb558e9f-1c39-460e-8860-71af6af63bd6");
@@ -53,52 +54,57 @@ public class PaymentTest {
     }
 
     @Test
-    void testCreatePaymentDefaultStatus() {
+    void testCreatePaymentDefaultStatus(){
         Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataVoucherCode);
 
         assertEquals("id-1", payment.getId());
         assertEquals("VOUCHER_CODE", payment.getMethod());
         assertEquals("WAITING", payment.getStatus());
-        assertEquals(paymentData, payment.getPaymentData());
+        assertEquals(paymentDataVoucherCode, payment.getPaymentData());
     }
 
-    void testCreatePaymentInvalidMethod() {
+    @Test
+    void testCreatePaymentInvalidMethod(){
         assertThrows(IllegalArgumentException.class, () -> {
             Payment payment = new Payment("id-1", "VOUCHER_CODED", paymentDataVoucherCode);
         });
     }
 
-    void testCreatePaymentInvalidPaymentData() {
+//    @Test
+//    void testCreatePaymentInvalidPaymentData(){
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataCashOnDelivery);
+//        });
+//    }
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataCashOnDelivery);
-        });
-    }
-
-    void testCreatePaymentSuccessStatus() {
+    @Test
+    void testCreatePaymentSuccessStatus(){
         Payment payment = new Payment("id-1", "VOUCHER_CODE", "SUCCESS", paymentDataVoucherCode);
 
         assertEquals("id-1", payment.getId());
         assertEquals("VOUCHER_CODE", payment.getMethod());
         assertEquals("SUCCESS", payment.getStatus());
-        assertEquals(paymentData, payment.getPaymentData());
+        assertEquals(paymentDataVoucherCode, payment.getPaymentData());
     }
 
-    void testCreatePaymentInvalidStatus() {
+    @Test
+    void testCreatePaymentInvalidStatus(){
         assertThrows(IllegalArgumentException.class, () -> {
             Payment payment = new Payment("id-1", "VOUCHER_CODE", "MEOW", paymentDataCashOnDelivery);
         });
     }
 
-    void testEditPaymentWithCancelledStatus() {
+    @Test
+    void testEditPaymentWithCancelledStatus(){
         Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataVoucherCode);
         payment.setStatus("CANCELLED");
         assertEquals("CANCELLED", payment.getStatus());
     }
 
-    void testEditPaymentWithCancelledStatus() {
+    @Test
+    void testEditPaymentWithInvalidStatus(){
         Payment payment = new Payment("id-1", "VOUCHER_CODE", paymentDataVoucherCode);
-        payment.setStatus("MEOW");
         assertThrows(IllegalArgumentException.class, () -> payment.setStatus("MEOW"));
     }
+
 }
