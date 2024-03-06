@@ -37,7 +37,6 @@ public class PaymentRepository {
         throw new IllegalArgumentException();
     }
 
-
     public Payment savePayment(Payment payment){
         int i = 0;
         for (Payment savedPayment : payments){

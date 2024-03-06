@@ -23,9 +23,10 @@ public class PaymentRepositoryTest {
 
         payments = new ArrayList<>();
 
-        HashMap<String, String> paymentData1 = PaymentData.getNewVoucherCodeData();
+        HashMap<String, String> paymentData1 = PaymentData.getNewVoucherCodeData("voucherCode-1");
         Payment payment1 = new Payment("id-1", "VOUCHER_CODE", paymentData1);
-        HashMap<String, String> paymentData2 = PaymentData.getNewCashOnDeliveryData();
+        HashMap<String, String> paymentData2 = PaymentData.getNewCashOnDeliveryData
+                ("address-1", "deliveryFee-1");
         Payment payment2 = new Payment("id-2", "CASH_ON_DELIVERY", paymentData2);
 
         payments.add(payment1);
@@ -57,7 +58,8 @@ public class PaymentRepositoryTest {
 
     @Test
     void testSetStatusWithInvalidPayment(){
-        HashMap<String, String> paymentData3 = PaymentData.getNewCashOnDeliveryData();
+        HashMap<String, String> paymentData3 = PaymentData.getNewCashOnDeliveryData
+                ("address-1", "deliveryFee-1");
         Payment payment3 = new Payment("id-3", "CASH_ON_DELIVERY", paymentData3);
 
         assertThrows(IllegalArgumentException.class, () -> {
